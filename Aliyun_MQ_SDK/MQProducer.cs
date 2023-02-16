@@ -7,6 +7,8 @@ using Aliyun.MQ.Runtime;
 using Aliyun.MQ.Util;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
+using Aliyun.MQ.Sample;
 using NLog;
 
 namespace Aliyun.MQ
@@ -75,6 +77,12 @@ namespace Aliyun.MQ
             {
                 stopwatch.Stop();
                 var ts = stopwatch.Elapsed;
+                
+                Interlocked.Increment(ref ProducerSample.totalCounts);
+                Interlocked.Add(ref ProducerSample.totalCostTime, ts.Milliseconds);
+                ProducerSample.InterlockedExchangeIfGreaterThan(ref ProducerSample.maxCostTime, ts.Milliseconds,
+                    ts.Milliseconds);
+                    
                 if (ts.CompareTo(TimeSpan.FromMilliseconds(500)) > 0)
                 {
                     Logger.Warn(
