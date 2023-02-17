@@ -13,9 +13,9 @@ namespace Aliyun.MQ
         private string _topicName;
         private string _consumer;
         private string _messageTag;
-        private readonly AliyunServiceClient _serviceClient;
+        private readonly NewAliyunServiceClient _serviceClient;
 
-        public MQConsumer(string instanceId, string topicName, string consumer, string messageTag, AliyunServiceClient serviceClient)
+        public MQConsumer(string instanceId, string topicName, string consumer, string messageTag, NewAliyunServiceClient serviceClient)
         {
             this._instanceId = instanceId;
             this._topicName = topicName;

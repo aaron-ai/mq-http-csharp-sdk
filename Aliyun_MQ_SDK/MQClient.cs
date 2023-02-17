@@ -6,7 +6,7 @@ using Aliyun.MQ.Runtime.Internal.Auth;
 
 namespace Aliyun.MQ
 {
-    public partial class MQClient : AliyunServiceClient
+    public partial class MQClient : NewAliyunServiceClient
     {
         #region Constructors
 

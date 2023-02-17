@@ -17,9 +17,9 @@ namespace Aliyun.MQ
 
         protected string _topicName;
         protected string _instanceId;
-        protected readonly AliyunServiceClient _serviceClient;
+        protected readonly NewAliyunServiceClient _serviceClient;
 
-        public MQProducer(string instanceId, string topicName, AliyunServiceClient serviceClient)
+        public MQProducer(string instanceId, string topicName, NewAliyunServiceClient serviceClient)
         {
             this._instanceId = instanceId;
             this._topicName = topicName;
@@ -89,7 +89,7 @@ namespace Aliyun.MQ
     {
         private readonly string _groupId;
 
-        public MQTransProducer(string instanceId, string topicName, string groupId, AliyunServiceClient serviceClient) : base(instanceId, topicName, serviceClient)
+        public MQTransProducer(string instanceId, string topicName, string groupId, NewAliyunServiceClient serviceClient) : base(instanceId, topicName, serviceClient)
         {
             if (string.IsNullOrEmpty(groupId))
             {
