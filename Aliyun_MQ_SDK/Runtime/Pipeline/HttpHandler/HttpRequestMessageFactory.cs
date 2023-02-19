@@ -296,9 +296,31 @@ namespace Aliyun.MQ.Runtime.Pipeline.HttpHandler
             _request.RequestUri = requestUri;
         }
         
+        /// <summary>
+        /// Disposes the HttpWebRequestMessage.
+        /// </summary>
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                if (_request != null)
+                    _request.Dispose();
+
+                _disposed = true;
+            }
         }
 
         public string Method { get; set; }
