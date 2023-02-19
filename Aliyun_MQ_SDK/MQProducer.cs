@@ -7,6 +7,8 @@ using Aliyun.MQ.Runtime;
 using Aliyun.MQ.Util;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 using NLog;
 
 namespace Aliyun.MQ
@@ -81,6 +83,24 @@ namespace Aliyun.MQ
                         $"It takes too long to publish message, topic={_topicName}, instanceId={_instanceId}, message={topicMessage}, timeSpan={ts}");
                 }
             }
+        }
+
+        public async Task<TopicMessage> PublishMessageAsync(TopicMessage topicMessage)
+        {
+            var request = new PublishMessageRequest(topicMessage.Body, topicMessage.MessageTag);
+            request.TopicName = this._topicName;
+            request.IntanceId = this._instanceId;
+            request.Properties = AliyunSDKUtils.DictToString(topicMessage.Properties);
+
+            var marshaller = PublishMessageRequestMarshaller.Instance;
+            var unmarshaller = PublishMessageResponseUnmarshaller.Instance;
+            var result = await _serviceClient.InvokeAsync<PublishMessageRequest, PublishMessageResponse>(request, marshaller,
+                unmarshaller, default(CancellationToken));
+            TopicMessage retMsg = new TopicMessage(null);
+            retMsg.Id = result.MessageId;
+            retMsg.BodyMD5 = result.MessageBodyMD5;
+            retMsg.ReceiptHandle = result.ReeceiptHandle;
+            return retMsg;
         }
 
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Runtime.InteropServices;
+using System.Threading;
 using Aliyun.MQ.Runtime.Pipeline.HttpHandler;
 using Aliyun.MQ.Util;
 
@@ -295,8 +296,8 @@ namespace Aliyun.MQ.Runtime
         }
         
         /// <summary>
-        /// Get or set the value to use for <see cref="HttpClientHandler.MaxConnectionsPerServer"/> on requests.
-        /// If this property is null, <see cref="HttpClientHandler.MaxConnectionsPerServer"/>
+        /// Get or set the value to use for <see cref="System.Net.Http.HttpClientHandler.MaxConnectionsPerServer"/> on requests.
+        /// If this property is null, <see cref="System.Net.Http.HttpClientHandler.MaxConnectionsPerServer"/>
         /// will be left at its default value of <see cref="int.MaxValue"/>.
         /// </summary>
         public int? MaxConnectionsPerServer
@@ -304,5 +305,27 @@ namespace Aliyun.MQ.Runtime
             get;
             set;
         }
+        
+        /// <summary>
+        /// Generates a <see cref="CancellationToken"/> based on the value
+        /// for <see cref="DefaultConfiguration.TimeToFirstByteTimeout"/>.
+        /// <para />
+        /// NOTE: <see cref="HttpWebRequestMessage.GetResponseAsync"/> uses 
+        /// </summary>
+        // internal CancellationToken BuildDefaultCancellationToken()
+        // {
+            // // legacy mode never had a working cancellation token, so keep it to default()
+            // if (DefaultConfiguration.Name == Runtime.DefaultConfigurationMode.Legacy)
+            //     return default(CancellationToken);
+            //
+            // // TimeToFirstByteTimeout is not a perfect match with HttpWebRequest/HttpClient.Timeout.  However, given
+            // // that both are configured to only use Timeout until the Response Headers are downloaded, this value
+            // // provides a reasonable default value.
+            // var cancelTimeout = DefaultConfiguration.TimeToFirstByteTimeout;
+            //
+            // return cancelTimeout.HasValue
+            //     ? new CancellationTokenSource(cancelTimeout.Value).Token
+            //     : default(CancellationToken);
+        // }
     }
 }

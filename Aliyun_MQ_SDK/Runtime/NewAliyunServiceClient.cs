@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using Aliyun.MQ.Runtime.Internal;
 using Aliyun.MQ.Runtime.Internal.Auth;
 using Aliyun.MQ.Runtime.Internal.Transform;
@@ -11,6 +12,7 @@ using Aliyun.MQ.Runtime.Pipeline.ErrorHandler;
 using Aliyun.MQ.Runtime.Pipeline.Handlers;
 using Aliyun.MQ.Runtime.Pipeline.HttpHandler;
 using Aliyun.MQ.Runtime.Pipeline.RetryHandler;
+using ExecutionContext = Aliyun.MQ.Runtime.Internal.ExecutionContext;
 
 namespace Aliyun.MQ.Runtime
 {
@@ -118,7 +120,7 @@ namespace Aliyun.MQ.Runtime
             return response;
         }
 
-        protected System.Threading.Tasks.Task<TResponse> InvokeAsync<TRequest, TResponse>(
+        internal System.Threading.Tasks.Task<TResponse> InvokeAsync<TRequest, TResponse>(
             TRequest request,
             IMarshaller<IRequest, WebServiceRequest> marshaller,
             ResponseUnmarshaller unmarshaller,
@@ -126,7 +128,23 @@ namespace Aliyun.MQ.Runtime
             where TRequest : WebServiceRequest
             where TResponse : WebServiceResponse, new()
         {
-            return null;
+            // TODO
+            // if (cancellationToken == default(CancellationToken))
+            //     cancellationToken = Config.BuildDefaultCancellationToken();
+            var executionContext = new ExecutionContext(
+                new RequestContext()
+                {
+                    ClientConfig = this.Config,
+                    Marshaller = marshaller,
+                    OriginalRequest = request,
+                    Unmarshaller = unmarshaller,
+                    IsAsync = true,
+                    CancellationToken = cancellationToken,
+                    Signer = Signer,
+                },
+                new ResponseContext()
+            );
+            return this.RuntimePipeline.InvokeAsync<TResponse>(executionContext);
         }
     }
 }
