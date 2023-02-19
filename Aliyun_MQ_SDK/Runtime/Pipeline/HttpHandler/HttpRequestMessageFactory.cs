@@ -294,6 +294,8 @@ namespace Aliyun.MQ.Runtime.Pipeline.HttpHandler
 
             _request = new HttpRequestMessage();
             _request.RequestUri = requestUri;
+            // TODO: decided by the caller.
+            _request.Method = System.Net.Http.HttpMethod.Post;
         }
         
         /// <summary>
@@ -342,9 +344,10 @@ namespace Aliyun.MQ.Runtime.Pipeline.HttpHandler
                     continue;
                 // if (ContentHeaderNames.Contains(kvp.Key, StringComparer.OrdinalIgnoreCase))
                 //     continue;
-
                 _request.Headers.TryAddWithoutValidation(kvp.Key, kvp.Value);
             }
+            // TODO
+            _request.Headers.Add("Connection", "Keep-Alive");
         }
 
         public HttpContent GetRequestContent()
