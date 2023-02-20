@@ -294,10 +294,8 @@ namespace Aliyun.MQ.Runtime.Pipeline.HttpHandler
 
             _request = new HttpRequestMessage();
             _request.RequestUri = requestUri;
-            // TODO: decided by the caller.
-            _request.Method = System.Net.Http.HttpMethod.Post;
         }
-        
+
         /// <summary>
         /// Disposes the HttpWebRequestMessage.
         /// </summary>
@@ -325,8 +323,23 @@ namespace Aliyun.MQ.Runtime.Pipeline.HttpHandler
             }
         }
 
-        public string Method { get; set; }
-        public Uri RequestUri { get; }
+        /// <summary>
+        /// The HTTP method or verb.
+        /// </summary>
+        public string Method
+        {
+            get { return _request.Method.Method; }
+            set { _request.Method = new System.Net.Http.HttpMethod(value); }
+        }
+        
+        /// <summary>
+        /// The request URI.
+        /// </summary>
+        public Uri RequestUri
+        {
+            get { return _request.RequestUri; }
+        }
+        
         public void ConfigureRequest(IRequestContext requestContext)
         {
             // Configure the Expect 100-continue header
