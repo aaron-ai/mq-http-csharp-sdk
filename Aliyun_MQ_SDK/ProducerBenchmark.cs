@@ -59,7 +59,7 @@ namespace Aliyun_MQ_SDK
                     ThreadPool.GetMinThreads(out var minWorker, completionPortThreads: out var minIoc);
                     ThreadPool.GetMaxThreads(out var maxWorker, out var maxIoc);
                     Logger.Info(
-                        $"success={success}, failure={failure}, seconds={seconds}, currentThread={ThreadPool.ThreadCount}, minWorker={minWorker}, minIOC={minIoc}, maxWorkder={maxWorker}, maxIOC={maxIoc}");
+                        $"success={success}, failure={failure}, seconds={seconds}, completedWorkItemCount={ThreadPool.CompletedWorkItemCount}, currentThread={ThreadPool.ThreadCount}, minWorker={minWorker}, minIOC={minIoc}, maxWorkder={maxWorker}, maxIOC={maxIoc}");
                     await Task.Delay(TimeSpan.FromSeconds(1));
                 }
             });

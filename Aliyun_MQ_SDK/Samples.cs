@@ -38,7 +38,7 @@ namespace Aliyun.MQ.Sample
             //         ThreadPool.GetMinThreads(out var minWorker, completionPortThreads: out var minIoc);
             //         ThreadPool.GetMaxThreads(out var maxWorker, out var maxIoc);
             //         Logger.Info(
-            //             $"successCount: {successCount}, failureCount: {failureCount},currentThread={ThreadPool.ThreadCount}, minWorker={minWorker}, minIOC={minIoc}, maxWorkder={maxWorker}, maxIOC={maxIoc}");
+            //             $"successCount: {successCount}, failureCount: {failureCount}, completedWorkItemCount={ThreadPool.CompletedWorkItemCount}, currentThread={ThreadPool.ThreadCount}, minWorker={minWorker}, minIOC={minIoc}, maxWorkder={maxWorker}, maxIOC={maxIoc}");
             //         await Task.Delay(TimeSpan.FromSeconds(1));
             //     }
             // });
