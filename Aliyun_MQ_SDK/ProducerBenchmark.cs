@@ -55,7 +55,7 @@ namespace Aliyun_MQ_SDK
                     }
 
                     var success = Interlocked.Exchange(ref _successCounter, 0);
-                    var failure = Interlocked.Exchange(ref _successCounter, 0);
+                    var failure = Interlocked.Exchange(ref _failureCounter, 0);
                     ThreadPool.GetMinThreads(out var minWorker, completionPortThreads: out var minIoc);
                     ThreadPool.GetMaxThreads(out var maxWorker, out var maxIoc);
                     Logger.Info(
