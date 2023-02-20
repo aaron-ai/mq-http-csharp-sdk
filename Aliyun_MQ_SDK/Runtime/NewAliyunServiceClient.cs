@@ -128,9 +128,6 @@ namespace Aliyun.MQ.Runtime
             where TRequest : WebServiceRequest
             where TResponse : WebServiceResponse, new()
         {
-            // TODO
-            // if (cancellationToken == default(CancellationToken))
-            //     cancellationToken = Config.BuildDefaultCancellationToken();
             var executionContext = new ExecutionContext(
                 new RequestContext()
                 {
