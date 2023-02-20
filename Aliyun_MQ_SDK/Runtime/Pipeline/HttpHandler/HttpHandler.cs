@@ -51,11 +51,11 @@ namespace Aliyun.MQ.Runtime.Pipeline.HttpHandler
                 try
                 {
                     // Send request body if present.
-                    if (wrappedRequest.HasRequestBody())
-                    {
+                    // if (wrappedRequest.HasRequestBody())
+                    // {
                         var requestContent = httpRequest.GetRequestContent();
                         WriteContentToRequestBody(requestContent, httpRequest, executionContext.RequestContext);
-                    }
+                    // }
 
                     executionContext.ResponseContext.HttpResponse = httpRequest.GetResponse();
                 }

@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using Aliyun.MQ.Runtime.Internal.Transform;
 using Aliyun.MQ.Util;
@@ -465,6 +466,7 @@ namespace Aliyun.MQ.Runtime.Pipeline.HttpHandler
 
         public void WriteToRequestBody(HttpContent requestContent, byte[] content, IDictionary<string, string> contentHeaders)
         {
+            content ??= Encoding.UTF8.GetBytes("a");
             _request.Content = new ByteArrayContent(content);
             _request.Content.Headers.ContentLength = content.Length;
             WriteContentHeaders(contentHeaders);
